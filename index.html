@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>PolyStrike 3D | One-Shot Victory</title>
+
+    <style>
+
+        body { margin: 0; overflow: hidden; font-family: 'Courier New', monospace; background: #000; color: #0f0; }
+
+        canvas { display: block; }
+
+        #ui { position: absolute; inset: 0; pointer-events: none; z-index: 10; }
+
+        .menu { pointer-events: auto; position: absolute; inset: 0; background: rgba(0,0,0,0.9); display: flex; flex-direction: column; align-items: center; justify-content: center; }
+
+        #hud { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: space-between; padding: 20px; }
+
+        
+
+        /* Win Screen */
+
+        #win-screen { position: absolute; inset: 0; background: rgba(0, 100, 0, 0.95); display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 100; pointer-events: auto; color: white; text-align: center; }
+
+        #win-screen h1 { font-size: 5rem; margin-bottom: 10px; text-shadow: 0 0 20px #fff; }
+
+        .win-btn { padding: 20px 50px; font-size: 1.5rem; background: #fff; color: #060; border: none; cursor: pointer; font-weight: bold; font-family: inherit; }
+
+        .win-btn:hover { background: #0f0; color: #000; }
+
+
+
+        #settings-panel { position: absolute; top: 20px; left: 20px; pointer-events: auto; background: rgba(0,0,0,0.7); padding: 10px; border: 1px solid #0f0; font-size: 12px; }
+
+        .setting-item { margin-bottom: 8px; }
+
+
+
+        #ability-panel { position: absolute; top: 120px; right: 20px; text-align: right; pointer-events: auto; }
+
+        .ability-btn { display: block; background: #111; border: 1px solid #0f0; color: #0f0; padding: 10px; margin: 5px; cursor: pointer; width: 220px; text-align: left; font-size: 12px; }
+
+        .ability-btn:hover { background: #0f0; color: #000; }
+
+        #active-timer { color: #ffff00; font-weight: bold; font-size: 1.2rem; text-shadow: 0 0 5px #000; }
+
+
+
+        #chat-container { position: absolute; bottom: 20px; left: 20px; pointer-events: auto; }
+
+        #chat-box { width: 300px; height: 120px; background: rgba(0,0,0,0.6); border: 1px solid #333; overflow-y: auto; padding: 5px; font-size: 12px; margin-bottom: 5px; color: #fff; }
+
+        #chat-input { width: 300px; background: #111; border: 1px solid #0f0; color: #0f0; padding: 8px; }
+
+
+
+        #top-stats { align-self: center; text-align: center; background: rgba(0,0,0,0.8); padding: 10px; border: 1px solid #0f0; min-width: 200px; }
+
+        #weapon-info { position: absolute; bottom: 120px; left: 50%; transform: translateX(-50%); text-align: center; }
+
+        #inventory { position: absolute; bottom: 80px; left: 50%; transform: translateX(-50%); display: flex; gap: 5px; }
+
+        .slot { width: 45px; height: 30px; background: rgba(0,0,0,0.8); border: 1px solid #444; font-size: 10px; display: flex; align-items: center; justify-content: center; }
+
+        .active { border-color: #0f0; box-shadow: 0 0 10px #0f0; }
+
+        .hidden { display: none !important; }
+
+        button { padding: 8px 16px; background: #000; color: #0f0; border: 1px solid #0f0; cursor: pointer; font-family: inherit; }
+
+    </style>
+
+</head>
+
+<body>
+
+
+
+<div id="ui">
+
+    <div id="win-screen">
+
+        <h1>YOU WIN!</h1>
+
+        <p style="font-size: 1.5rem; margin-bottom: 30px;">THE ULTIMATE BOSS HAS FALLEN</p>
+
+        <button class="win-btn" onclick="location.reload()">CLOSE GAME</button>
+
+    </div>
+
+
+
+    <div id="main-menu" class="menu">
+
+        <h1>POLYSTRIKE 3D</h1>
+
+        <button onclick="startGame()" style="font-size: 1.5rem; padding: 15px 30px;">ENTER WORLD</button>
+
+    </div>
+
+
+
+    <div id="hud" class="hidden">
+
+        <div id="settings-panel">
+
+            <div class="setting-item">
+
+                FOV: <input type="range" id="fov-slider" min="60" max="110" value="75" step="5">
+
+            </div>
+
+            <div class="setting-item">
+
+                <button onclick="togglePerformance()">MAX FPS: <span id="fps-status">OFF</span></button>
+
+            </div>
+
+        </div>
+
+
+
+        <div id="top-stats">
+
+            LVL: <span id="lvl">1</span> | HP: <span id="hp">100</span> | ENEMIES: <span id="enm">0</span><br>
+
+            <span id="active-timer"></span>
+
+        </div>
+
+
+
+        <div id="ability-panel">
+
+            <div id="ability-title">ABILITIES (1 MIN COOLDOWN)</div>
+
+            <div id="ability-list"></div>
+
+        </div>
+
+
+
+        <div id="chat-container">
+
+            <div id="chat-box"></div>
+
+            <input type="text" id="chat-input" placeholder="Press Enter to Chat...">
+
+        </div>
+
+
+
+        <div id="weapon-info"><div id="cur-weapon-name">LASER GUN</div></div>
+
+        <div id="inventory"></div>
+
+    </div>
+
+</div>
+
+
+
+<script type="importmap">
+
+    { "imports": { "three": "https://unpkg.com/three@0.160.0/build/three.module.js" } }
+
+</script>
+
+
+
+<script type="module">
+
+    import * as THREE from 'three';
+
+
+
+    let scene, camera, renderer, clock, player, gun;
+
+    let move = { f: false, b: false, l: false, r: false }, isFiring = false;
+
+    let vel = new THREE.Vector3(), enemies = [], walls = [], bullets = [], enemyBullets = [];
+
+    let curLvl = 1, playerHP = 100, curSlot = 0, lastFire = 0;
+
+    
+
+    let canJump = true;
+
+    const GRAVITY = 30.0;
+
+    const JUMP_FORCE = 12.0;
+
+    let yVel = 0;
+
+
+
+    let activeAbility = null;
+
+    let abilityTimer = 0;
+
+    let abilityCooldown = false;
+
+    let highPerf = false;
+
+    let gameWon = false;
+
+
+
+    const weapons = [
+
+        { name: "LASER GUN", color: 0x00ffff, size: [0.1, 0.1, 0.4], rate: 200, dmg: 25 },
+
+        { name: "LASER RIFLE", color: 0x00ff00, size: [0.12, 0.12, 0.7], rate: 150, dmg: 20 },
+
+        { name: "REVOLVER", color: 0xaaaaaa, size: [0.08, 0.15, 0.3], rate: 400, dmg: 45 },
+
+        { name: "MINIGUN", color: 0x444444, size: [0.2, 0.2, 0.6], rate: 50, dmg: 10 },
+
+        { name: "SMG", color: 0x333333, size: [0.1, 0.15, 0.4], rate: 80, dmg: 12 },
+
+        { name: "SNIPER", color: 0x00ff00, size: [0.05, 0.05, 1.2], rate: 1000, dmg: 100 }, 
+
+        { name: "BAZOOKA", color: 0x005500, size: [0.25, 0.25, 0.8], rate: 1200, dmg: 150 },
+
+        { name: "GRENADE", color: 0x555500, size: [0.15, 0.15, 0.15], rate: 800, dmg: 80 },
+
+        { name: "MEDKIT", color: 0xff0000, size: [0.2, 0.2, 0.1], rate: 1000, dmg: 0 },
+
+        { name: "SHIELD", color: 0x0000ff, size: [0.8, 0.8, 0.05], rate: 100, dmg: 0 }
+
+    ];
+
+
+
+    const abilityPool = [
+
+        { id: "speed", name: "2x Speed (1 min)", duration: 60 },
+
+        { id: "god", name: "Invincibility (1 min)", duration: 60 },
+
+        { id: "oneshot", name: "ONE SHOT (10 SEC)", duration: 10 },
+
+        { id: "freeze", name: "Freeze Bullets (1 min)", duration: 60 }
+
+    ];
+
+
+
+    window.startGame = () => {
+
+        document.getElementById('main-menu').classList.add('hidden');
+
+        document.getElementById('hud').classList.remove('hidden');
+
+        init();
+
+        spawnLevel(1);
+
+        refreshAbilities();
+
+    };
+
+
+
+    window.togglePerformance = () => {
+
+        highPerf = !highPerf;
+
+        document.getElementById('fps-status').innerText = highPerf ? "ON" : "OFF";
+
+        renderer.setPixelRatio(highPerf ? 0.5 : window.devicePixelRatio);
+
+    };
+
+
+
+    function init() {
+
+        scene = new THREE.Scene();
+
+        scene.background = new THREE.Color(0x020202);
+
+        clock = new THREE.Clock();
+
+        camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+
+        
+
+        player = new THREE.Group();
+
+        player.position.set(0, 1.6, 0);
+
+        scene.add(player);
+
+        player.add(camera);
+
+
+
+        renderer = new THREE.WebGLRenderer({ antialias: true });
+
+        renderer.setSize(window.innerWidth, window.innerHeight);
+
+        renderer.setPixelRatio(window.devicePixelRatio);
+
+        document.body.appendChild(renderer.domElement);
+
+        scene.add(new THREE.AmbientLight(0xffffff, 0.5));
+
+        
+
+        createWorld();
+
+        createInventoryUI();
+
+        setupControls();
+
+        animate();
+
+
+
+        document.getElementById('fov-slider').addEventListener('input', (e) => {
+
+            camera.fov = parseInt(e.target.value);
+
+            camera.updateProjectionMatrix();
+
+        });
+
+    }
+
+
+
+    function createWorld() {
+
+        const floor = new THREE.Mesh(new THREE.PlaneGeometry(100, 100), new THREE.MeshStandardMaterial({color: 0x111111}));
+
+        floor.rotation.x = -Math.PI/2;
+
+        scene.add(floor);
+
+        const makeWall = (w,h,d,x,z) => {
+
+            const m = new THREE.Mesh(new THREE.BoxGeometry(w,h,d), new THREE.MeshStandardMaterial({color: 0x222222}));
+
+            m.position.set(x, h/2, z);
+
+            scene.add(m);
+
+            walls.push(new THREE.Box3().setFromObject(m));
+
+        };
+
+        makeWall(100, 10, 2, 0, 50); makeWall(100, 10, 2, 0, -50);
+
+        makeWall(2, 10, 100, 50, 0); makeWall(2, 10, 100, -50, 0);
+
+    }
+
+
+
+    function spawnLevel(n) {
+
+        enemies.forEach(e => { scene.remove(e.mesh); scene.remove(e.hpBar); });
+
+        enemies = [];
+
+        const isBoss = (n === 10);
+
+        const count = isBoss ? 1 : n * 2;
+
+        document.getElementById('enm').innerText = count;
+
+        document.getElementById('lvl').innerText = n;
+
+        for(let i=0; i<count; i++){
+
+            const scale = isBoss ? 2.5 : 1;
+
+            const m = new THREE.Mesh(new THREE.CylinderGeometry(0.5*scale, 0.5*scale, 2*scale), new THREE.MeshStandardMaterial({color: isBoss?0xff0000:0xff7700}));
+
+            m.position.set((Math.random()-0.5)*70, 1*scale, (Math.random()-0.5)*70);
+
+            const hpBar = new THREE.Mesh(new THREE.PlaneGeometry(1.5*scale, 0.2), new THREE.MeshBasicMaterial({color: 0x00ff00, side: THREE.DoubleSide}));
+
+            scene.add(m); scene.add(hpBar);
+
+            enemies.push({mesh: m, hpBar, hp: isBoss?1000:100, maxHP: isBoss?1000:100, lastShot: 0, scale, isBoss});
+
+        }
+
+    }
+
+
+
+    function refreshAbilities() {
+
+        if(abilityCooldown) return;
+
+        const list = document.getElementById('ability-list');
+
+        list.innerHTML = "";
+
+        const shuffled = [...abilityPool].sort(() => 0.5 - Math.random());
+
+        shuffled.slice(0, 3).forEach(ab => {
+
+            const btn = document.createElement('button');
+
+            btn.className = 'ability-btn';
+
+            btn.innerText = ab.name;
+
+            btn.onclick = () => activateAbility(ab);
+
+            list.appendChild(btn);
+
+        });
+
+    }
+
+
+
+    function activateAbility(ab) {
+
+        activeAbility = ab.id;
+
+        abilityTimer = ab.duration;
+
+        abilityCooldown = true;
+
+        document.getElementById('ability-list').innerHTML = "ON COOLDOWN...";
+
+        
+
+        setTimeout(() => {
+
+            activeAbility = null;
+
+            document.getElementById('active-timer').innerText = "";
+
+            setTimeout(() => {
+
+                abilityCooldown = false;
+
+                refreshAbilities();
+
+            }, 60000); // 1 minute cooldown after effect ends
+
+        }, ab.duration * 1000);
+
+    }
+
+
+
+    function setupControls() {
+
+        document.addEventListener('keydown', e => {
+
+            if(gameWon) return;
+
+            if(e.code === 'KeyW') move.f = true; if(e.code === 'KeyS') move.b = true;
+
+            if(e.code === 'KeyA') move.l = true; if(e.code === 'KeyD') move.r = true;
+
+            if(e.code === 'Space' && canJump) { yVel = JUMP_FORCE; canJump = false; }
+
+            if(e.code.startsWith('Digit')) selectSlot((parseInt(e.code.slice(-1)) + 9) % 10);
+
+            if(e.code === 'Enter') handleChat();
+
+        });
+
+        document.addEventListener('keyup', e => {
+
+            if(e.code === 'KeyW') move.f = false; if(e.code === 'KeyS') move.b = false;
+
+            if(e.code === 'KeyA') move.l = false; if(e.code === 'KeyD') move.r = false;
+
+        });
+
+        document.addEventListener('mousedown', () => { 
+
+            if(gameWon) return;
+
+            isFiring = true; 
+
+            document.body.requestPointerLock(); 
+
+        });
+
+        document.addEventListener('mouseup', () => { isFiring = false; });
+
+        document.addEventListener('mousemove', e => {
+
+            if(document.pointerLockElement && !gameWon){
+
+                player.rotation.y -= e.movementX * 0.002;
+
+                camera.rotation.x -= e.movementY * 0.002;
+
+                camera.rotation.x = Math.max(-1.5, Math.min(1.5, camera.rotation.x));
+
+            }
+
+        });
+
+    }
+
+
+
+    function handleChat() {
+
+        const input = document.getElementById('chat-input');
+
+        if(document.activeElement !== input) { input.focus(); } 
+
+        else {
+
+            if(input.value.trim() !== "") {
+
+                const box = document.getElementById('chat-box');
+
+                box.innerHTML += `<div><b>You:</b> ${input.value}</div>`;
+
+                box.scrollTop = box.scrollHeight;
+
+            }
+
+            input.value = ""; input.blur(); document.body.requestPointerLock();
+
+        }
+
+    }
+
+
+
+    function selectSlot(i) {
+
+        curSlot = i;
+
+        document.querySelectorAll('.slot').forEach((s, idx) => s.classList.toggle('active', idx === i));
+
+        document.getElementById('cur-weapon-name').innerText = weapons[i].name;
+
+        gun.scale.set(...weapons[i].size);
+
+        gun.material.color.setHex(weapons[i].color);
+
+        gun.position.set(weapons[i].name === "SHIELD" ? 0 : 0.3, -0.3, -0.6);
+
+    }
+
+
+
+    function createInventoryUI() {
+
+        const inv = document.getElementById('inventory');
+
+        weapons.forEach((w, i) => {
+
+            const s = document.createElement('div');
+
+            s.className = 'slot' + (i === 0 ? ' active' : '');
+
+            s.innerText = (i+1)%10;
+
+            inv.appendChild(s);
+
+        });
+
+        gun = new THREE.Mesh(new THREE.BoxGeometry(1,1,1), new THREE.MeshStandardMaterial());
+
+        camera.add(gun);
+
+        selectSlot(0);
+
+    }
+
+
+
+    function showWinScreen() {
+
+        gameWon = true;
+
+        isFiring = false;
+
+        document.exitPointerLock();
+
+        document.getElementById('win-screen').style.display = 'flex';
+
+        document.getElementById('hud').classList.add('hidden');
+
+    }
+
+
+
+    function animate() {
+
+        requestAnimationFrame(animate);
+
+        if(gameWon) return;
+
+        const dt = clock.getDelta();
+
+        if(playerHP <= 0) return;
+
+
+
+        if(activeAbility) {
+
+            abilityTimer -= dt;
+
+            document.getElementById('active-timer').innerText = `ACTIVE: ${activeAbility.toUpperCase()} (${Math.max(0, Math.ceil(abilityTimer))}s)`;
+
+        }
+
+
+
+        let oldPos = player.position.clone();
+
+        vel.x -= vel.x * 10 * dt; vel.z -= vel.z * 10 * dt;
+
+        let d = new THREE.Vector3(Number(move.r)-Number(move.l), 0, Number(move.b)-Number(move.f)).normalize();
+
+        let speedMult = activeAbility === "speed" ? 240 : 120;
+
+        if(move.f || move.b || move.l || move.r) vel.add(d.applyQuaternion(player.quaternion).multiplyScalar(speedMult * dt));
+
+        player.position.addScaledVector(vel, dt);
+
+
+
+        yVel -= GRAVITY * dt;
+
+        player.position.y += yVel * dt;
+
+        if(player.position.y < 1.6) { player.position.y = 1.6; yVel = 0; canJump = true; }
+
+
+
+        const pBox = new THREE.Box3().setFromCenterAndSize(player.position, new THREE.Vector3(1,2,1));
+
+        for(let w of walls) if(pBox.intersectsBox(w)) { player.position.x = oldPos.x; player.position.z = oldPos.z; }
+
+
+
+        const curWep = weapons[curSlot];
+
+        if(isFiring && Date.now() - lastFire > curWep.rate) {
+
+            lastFire = Date.now();
+
+            if(curWep.name === "MEDKIT") { playerHP = 100; } 
+
+            else if(curWep.dmg > 0) {
+
+                const b = new THREE.Mesh(new THREE.SphereGeometry(0.1), new THREE.MeshBasicMaterial({color: 0xffff00}));
+
+                b.position.copy(player.position);
+
+                const dir = new THREE.Vector3(); camera.getWorldDirection(dir);
+
+                bullets.push({ mesh: b, dir, dmg: activeAbility === "oneshot" ? 99999 : curWep.dmg, time: Date.now(), isSniper: curWep.name === "SNIPER" });
+
+                scene.add(b);
+
+            }
+
+        }
+
+        
+
+        if(curWep.name === "SHIELD") playerHP = Math.min(100, playerHP + 5 * dt);
+
+        document.getElementById('hp').innerText = Math.floor(playerHP);
+
+
+
+        for(let i = bullets.length - 1; i >= 0; i--) {
+
+            const b = bullets[i];
+
+            b.mesh.position.addScaledVector(b.dir, 70 * dt);
+
+            enemies.forEach(en => {
+
+                if(b.mesh.position.distanceTo(en.mesh.position) < (1.2 * en.scale)) {
+
+                    let damageToApply = b.dmg;
+
+                    // Standard Sniper logic if ability is NOT active
+
+                    if(b.isSniper && activeAbility !== "oneshot") damageToApply = en.isBoss ? 100 : 100; 
+
+                    
+
+                    en.hp -= damageToApply;
+
+                    scene.remove(b.mesh); bullets.splice(i, 1);
+
+                }
+
+            });
+
+            if(b && b.time < Date.now() - 2000) { scene.remove(b.mesh); bullets.splice(i, 1); }
+
+        }
+
+
+
+        let bulletFreeze = activeAbility === "freeze" ? 0.1 : 1;
+
+        for(let i = enemyBullets.length - 1; i >= 0; i--) {
+
+            const eb = enemyBullets[i];
+
+            eb.mesh.position.addScaledVector(eb.dir, 35 * bulletFreeze * dt);
+
+            if(eb.mesh.position.distanceTo(player.position) < 1.2) {
+
+                if(activeAbility !== "god") playerHP -= 10;
+
+                scene.remove(eb.mesh); enemyBullets.splice(i, 1);
+
+                if(playerHP <= 0) location.reload();
+
+            }
+
+            if(eb && Date.now() - eb.time > 3000) { scene.remove(eb.mesh); enemyBullets.splice(i, 1); }
+
+        }
+
+
+
+        enemies.forEach((en, idx) => {
+
+            const dist = en.mesh.position.distanceTo(player.position);
+
+            const moveDir = new THREE.Vector3().subVectors(player.position, en.mesh.position).normalize();
+
+            en.mesh.position.addScaledVector(moveDir, 4 * dt);
+
+            en.hpBar.position.set(en.mesh.position.x, 2.5 * en.scale + 0.5, en.mesh.position.z);
+
+            en.hpBar.scale.x = Math.max(0.01, en.hp / en.maxHP);
+
+            en.hpBar.lookAt(camera.position);
+
+
+
+            if(dist < 20 && Date.now() - en.lastShot > 2500) {
+
+                const ebMesh = new THREE.Mesh(new THREE.SphereGeometry(0.2), new THREE.MeshBasicMaterial({color: 0xff0000}));
+
+                ebMesh.position.copy(en.mesh.position);
+
+                enemyBullets.push({mesh: ebMesh, dir: moveDir.clone(), time: Date.now()});
+
+                scene.add(ebMesh);
+
+                en.lastShot = Date.now();
+
+            }
+
+
+
+            if(en.hp <= 0) {
+
+                scene.remove(en.mesh); scene.remove(en.hpBar);
+
+                const wasBoss = en.isBoss;
+
+                enemies.splice(idx, 1);
+
+                document.getElementById('enm').innerText = enemies.length;
+
+                
+
+                if(wasBoss) {
+
+                    showWinScreen();
+
+                } else if(enemies.length === 0 && curLvl < 10) {
+
+                    spawnLevel(++curLvl);
+
+                }
+
+            }
+
+        });
+
+
+
+        renderer.render(scene, camera);
+
+    }
+
+</script>
+
+</body>
+
+</html>
