@@ -210,6 +210,7 @@
         });
 
         peer.on('connection', (conn) => {
+            // MAX PLAYER FIX
             if (connections.length >= MAX_PLAYERS - 1) {
                 conn.on('open', () => {
                     conn.send({ type: 'error', msg: 'Lobby Full' });
@@ -251,6 +252,8 @@
                 delete remotePlayers[conn.peer];
             }
             connections = connections.filter(c => c !== conn);
+            // Inform others
+            if(isHost) broadcast({ type: 'playerDisconnect', id: conn.peer });
         });
     }
 
@@ -259,40 +262,67 @@
 
         if (data.type === 'handshake') {
             createRemotePlayer(conn.peer, data.username);
+            // Host sends existing players to the newcomer
+            if (isHost) {
+                Object.keys(remotePlayers).forEach(id => {
+                    if (id !== conn.peer) {
+                        conn.send({ type: 'handshake', username: remotePlayers[id].username, id: id });
+                    }
+                });
+                // Host sends their own identity
+                conn.send({ type: 'handshake', username: myUsername, id: 'host' });
+            }
         }
 
         if (data.type === 'move') {
-            if (remotePlayers[conn.peer]) {
-                remotePlayers[conn.peer].mesh.position.set(data.x, data.y, data.z);
-                remotePlayers[conn.peer].mesh.rotation.y = data.ry;
+            const id = data.id || conn.peer;
+            if (remotePlayers[id]) {
+                remotePlayers[id].mesh.position.set(data.x, data.y, data.z);
+                remotePlayers[id].mesh.rotation.y = data.ry;
+            }
+            // HOST RELAY: Make other players see this player
+            if (isHost) {
+                broadcastExcept(conn, { ...data, id: conn.peer });
             }
         }
 
         if (data.type === 'shoot') {
             spawnBullet(new THREE.Vector3(data.pos.x, data.pos.y, data.pos.z), data.dir, data.dmg, false);
+            if (isHost) broadcastExcept(conn, data);
+        }
+
+        if (data.type === 'enemyShoot') {
+            spawnEnemyBullet(data.pos, data.dir);
         }
 
         if (data.type === 'chat') {
             const box = document.getElementById('chat-box');
             box.innerHTML += `<div><b>${data.user}:</b> ${data.msg}</div>`;
             box.scrollTop = box.scrollHeight;
+            if (isHost) broadcastExcept(conn, data);
         }
 
-        // CLIENT-SIDE: Handle enemy updates from host
         if (data.type === 'enemySync' && !isHost) {
             updateEnemiesFromHost(data.enemies);
         }
 
-        // HOST-SIDE: Handle hit notification from clients
         if (data.type === 'enemyHit' && isHost) {
             const en = enemies.find(e => e.id === data.id);
             if (en) en.hp -= data.dmg;
         }
+
+        if (data.type === 'playerDisconnect') {
+            if (remotePlayers[data.id]) {
+                scene.remove(remotePlayers[data.id].mesh);
+                delete remotePlayers[data.id];
+            }
+        }
     }
 
     function createRemotePlayer(id, name) {
+        if (remotePlayers[id]) return;
         const geo = new THREE.CylinderGeometry(0.5, 0.5, 2);
-        const mat = new THREE.MeshStandardMaterial({ color: 0x0088ff });
+        const mat = new THREE.MeshStandardMaterial({ color: id === 'host' ? 0xff00ff : 0x0088ff });
         const mesh = new THREE.Mesh(geo, mat);
         scene.add(mesh);
         remotePlayers[id] = { mesh, username: name };
@@ -305,9 +335,14 @@
         connections.forEach(c => c.send(data));
     }
 
+    function broadcastExcept(exceptConn, data) {
+        connections.forEach(c => {
+            if (c !== exceptConn) c.send(data);
+        });
+    }
+
     // --- Enemy Logic Update ---
     function updateEnemiesFromHost(enemyData) {
-        // Remove enemies that are no longer in the list
         const activeIds = enemyData.map(e => e.id);
         enemies = enemies.filter(en => {
             if (!activeIds.includes(en.id)) {
@@ -321,7 +356,6 @@
         enemyData.forEach(data => {
             let en = enemies.find(e => e.id === data.id);
             if (!en) {
-                // Spawn new enemy mesh locally
                 const scale = data.isBoss ? 2.5 : 1;
                 const m = new THREE.Mesh(new THREE.CylinderGeometry(0.5*scale, 0.5*scale, 2*scale), new THREE.MeshStandardMaterial({color: data.isBoss?0xff0000:0xff7700}));
                 const hpBar = new THREE.Mesh(new THREE.PlaneGeometry(1.5*scale, 0.2), new THREE.MeshBasicMaterial({color: 0x00ff00, side: THREE.DoubleSide}));
@@ -329,7 +363,6 @@
                 en = { id: data.id, mesh: m, hpBar, scale, isBoss: data.isBoss, hp: data.hp, maxHP: data.maxHP };
                 enemies.push(en);
             }
-            // Update position and HP
             en.mesh.position.set(data.x, data.y, data.z);
             en.hp = data.hp;
             en.hpBar.position.set(data.x, 2.5 * en.scale + 0.5, data.z);
@@ -514,6 +547,13 @@
         }
     }
 
+    function spawnEnemyBullet(pos, dir) {
+        const ebMesh = new THREE.Mesh(new THREE.SphereGeometry(0.2), new THREE.MeshBasicMaterial({color: 0xff0000}));
+        ebMesh.position.copy(pos);
+        enemyBullets.push({mesh: ebMesh, dir: new THREE.Vector3(dir.x, dir.y, dir.z), time: Date.now()});
+        scene.add(ebMesh);
+    }
+
     function selectSlot(i) {
         curSlot = i;
         document.querySelectorAll('.slot').forEach((s, idx) => s.classList.toggle('active', idx === i));
@@ -525,6 +565,7 @@
 
     function createInventoryUI() {
         const inv = document.getElementById('inventory');
+        inv.innerHTML = "";
         weapons.forEach((w, i) => {
             const s = document.createElement('div');
             s.className = 'slot' + (i === 0 ? ' active' : '');
@@ -569,7 +610,7 @@
         const pBox = new THREE.Box3().setFromCenterAndSize(player.position, new THREE.Vector3(1,2,1));
         for(let w of walls) if(pBox.intersectsBox(w)) { player.position.x = oldPos.x; player.position.z = oldPos.z; }
 
-        // Networking: Sync Position & Enemies every 50ms
+        // Sync Position
         if(Date.now() - lastNetTick > 50 && peer) {
             broadcast({ type: 'move', x: player.position.x, y: player.position.y, z: player.position.z, ry: player.rotation.y });
             
@@ -625,10 +666,10 @@
             if(eb && Date.now() - eb.time > 3000) { scene.remove(eb.mesh); enemyBullets.splice(i, 1); }
         }
 
-        // Host handles Enemy AI
+        // Host Enemy AI
         if (isHost || !peer) {
             enemies.forEach((en, idx) => {
-                // Find nearest player (Self or Remotes)
+                // MULTIPLAYER TARGETING: Find closest player
                 let targetPos = player.position;
                 let minDist = en.mesh.position.distanceTo(player.position);
                 
@@ -645,10 +686,8 @@
                 en.hpBar.lookAt(camera.position);
 
                 if(minDist < 20 && Date.now() - en.lastShot > 2500) {
-                    const ebMesh = new THREE.Mesh(new THREE.SphereGeometry(0.2), new THREE.MeshBasicMaterial({color: 0xff0000}));
-                    ebMesh.position.copy(en.mesh.position);
-                    enemyBullets.push({mesh: ebMesh, dir: moveDir.clone(), time: Date.now()});
-                    scene.add(ebMesh);
+                    spawnEnemyBullet(en.mesh.position, moveDir);
+                    if(isHost) broadcast({ type: 'enemyShoot', pos: en.mesh.position, dir: moveDir });
                     en.lastShot = Date.now();
                 }
 
@@ -662,7 +701,6 @@
                 }
             });
         }
-
         renderer.render(scene, camera);
     }
 </script>
