@@ -7,32 +7,27 @@
         body { margin: 0; overflow: hidden; font-family: 'Courier New', monospace; background: #000; color: #0f0; }
         canvas { display: block; }
         #ui { position: absolute; inset: 0; pointer-events: none; z-index: 10; }
-
         /* ===== MENU STYLES ===== */
         .menu { pointer-events: auto; position: absolute; inset: 0; background: rgba(0,0,0,0.93); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; }
         .menu h1 { margin-bottom: 10px; text-shadow: 0 0 12px #0f0, 0 0 30px #0f0; font-size: 2.8rem; letter-spacing: 6px; }
-
         #username-input, #join-input, #join-1v1-input {
             padding: 12px; background: #111; border: 2px solid #0f0; color: #0f0;
             font-family: inherit; font-size: 1.2rem; text-align: center; outline: none;
             width: 300px; margin-bottom: 4px; box-sizing: border-box;
         }
         #join-1v1-input { border-color: #ff6600; color: #ff6600; }
-
         .menu-btn {
             width: 320px; padding: 12px; background: #000; color: #0f0;
             border: 1px solid #0f0; cursor: pointer; font-family: inherit;
             font-size: 1rem; transition: 0.2s; box-sizing: border-box;
         }
         .menu-btn:hover { background: #0f0; color: #000; }
-
         .menu-btn-1v1 {
             width: 320px; padding: 12px; background: #0a0500; color: #ff6600;
             border: 1px solid #ff6600; cursor: pointer; font-family: inherit;
             font-size: 1rem; transition: 0.2s; box-sizing: border-box;
         }
         .menu-btn-1v1:hover { background: #ff6600; color: #000; }
-
         .duel-section {
             width: 320px; border-top: 1px solid #ff6600; margin-top: 8px;
             padding-top: 12px; display: flex; flex-direction: column; align-items: center; gap: 8px;
@@ -41,19 +36,14 @@
             color: #ff6600; font-size: 0.85rem; letter-spacing: 3px;
             text-shadow: 0 0 8px #ff6600; margin-bottom: 4px;
         }
-
         /* ===== HUD & SCREENS ===== */
         #hud { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: space-between; padding: 20px; pointer-events: none; }
-
         #win-screen { position: absolute; inset: 0; background: rgba(0,80,0,0.96); display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 100; pointer-events: auto; color: white; text-align: center; }
         #win-screen h1 { font-size: 5rem; margin-bottom: 10px; text-shadow: 0 0 20px #0f0; }
-
         #death-screen { position: absolute; inset: 0; background: rgba(130,0,0,0.92); display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 101; pointer-events: auto; color: white; text-align: center; }
         #death-screen h1 { font-size: 5rem; color: #ff3333; margin-bottom: 10px; text-shadow: 0 0 20px #f00; }
-
         .win-btn { padding: 18px 50px; font-size: 1.4rem; background: #fff; color: #050; border: none; cursor: pointer; font-weight: bold; font-family: inherit; margin-top: 10px; }
         .win-btn:hover { background: #0f0; color: #000; }
-
         /* ===== 1v1 HUD ===== */
         #onevone-hud {
             position: absolute; top: 0; left: 0; right: 0;
@@ -80,9 +70,7 @@
         #ov-my-fill { background: linear-gradient(90deg, #00dd77, #00ff99); }
         #ov-opp-fill { background: linear-gradient(90deg, #ff3333, #ff6666); }
         .ov-hp-num { font-size: 0.75rem; width: 28px; color: #ddd; }
-
         .ov-center-row { display: flex; align-items: center; gap: 20px; }
-
         /* ===== ROUND NOTIFICATION ===== */
         #round-notify {
             position: absolute; top: 42%; left: 50%; transform: translate(-50%, -50%);
@@ -90,14 +78,13 @@
             animation: fadeInOut 2.5s ease-in-out;
         }
         @keyframes fadeInOut {
-            0%   { opacity: 0; transform: translate(-50%, -40%) scale(0.8); }
-            20%  { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-            75%  { opacity: 1; }
+            0% { opacity: 0; transform: translate(-50%, -40%) scale(0.8); }
+            20% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+            75% { opacity: 1; }
             100% { opacity: 0; transform: translate(-50%, -60%) scale(1.05); }
         }
         #round-notify h2 { font-size: 3.2rem; margin: 0; letter-spacing: 6px; text-shadow: 0 0 20px currentColor; }
-        #round-notify p  { font-size: 1.3rem; margin: 6px 0 0; color: #ddd; letter-spacing: 3px; }
-
+        #round-notify p { font-size: 1.3rem; margin: 6px 0 0; color: #ddd; letter-spacing: 3px; }
         /* ===== 1v1 FINAL RESULT ===== */
         #onevone-result {
             position: absolute; inset: 0; background: rgba(0,0,0,0.97);
@@ -107,7 +94,6 @@
         #onevone-result h1 { font-size: 4.5rem; margin-bottom: 8px; letter-spacing: 6px; text-shadow: 0 0 30px currentColor; }
         #ov-final-score { font-size: 3rem; color: #888; margin-bottom: 30px; letter-spacing: 12px; }
         #ov-matchup { font-size: 1rem; color: #555; margin-bottom: 10px; letter-spacing: 2px; }
-
         /* ===== SETTINGS / ABILITIES / ETC ===== */
         #settings-panel { position: absolute; top: 20px; left: 20px; pointer-events: auto; background: rgba(0,0,0,0.7); padding: 10px; border: 1px solid #0f0; font-size: 12px; }
         .setting-item { margin-bottom: 8px; }
@@ -115,11 +101,9 @@
         .ability-btn { display: block; background: #111; border: 1px solid #0f0; color: #0f0; padding: 10px; margin: 5px; cursor: pointer; width: 220px; text-align: left; font-size: 12px; }
         .ability-btn:hover { background: #0f0; color: #000; }
         #active-timer { color: #ffff00; font-weight: bold; font-size: 1.2rem; text-shadow: 0 0 5px #000; }
-
         #chat-container { position: absolute; bottom: 20px; left: 20px; pointer-events: auto; }
         #chat-box { width: 300px; height: 120px; background: rgba(0,0,0,0.6); border: 1px solid #333; overflow-y: auto; padding: 5px; font-size: 12px; margin-bottom: 5px; color: #fff; }
         #chat-input { width: 300px; background: #111; border: 1px solid #0f0; color: #0f0; padding: 8px; box-sizing: border-box; }
-
         #top-stats { align-self: center; text-align: center; background: rgba(0,0,0,0.8); padding: 10px; border: 1px solid #0f0; min-width: 200px; }
         #weapon-info { position: absolute; bottom: 120px; left: 50%; transform: translateX(-50%); text-align: center; }
         #inventory { position: absolute; bottom: 80px; left: 50%; transform: translateX(-50%); display: flex; gap: 5px; }
@@ -127,7 +111,6 @@
         .active { border-color: #0f0; box-shadow: 0 0 10px #0f0; }
         .hidden { display: none !important; }
         #network-status { position: fixed; top: 10px; right: 10px; font-size: 10px; color: #888; }
-
         /* Crosshair */
         #crosshair {
             position: absolute; top: 50%; left: 50%;
@@ -138,28 +121,24 @@
             content: ''; position: absolute; background: rgba(255,255,255,0.85);
         }
         #crosshair::before { width: 14px; height: 2px; top: -1px; left: -7px; }
-        #crosshair::after  { width: 2px; height: 14px; top: -7px; left: -1px; }
+        #crosshair::after { width: 2px; height: 14px; top: -7px; left: -1px; }
     </style>
 </head>
 <body>
-
 <div id="ui">
     <div id="network-status">OFFLINE</div>
-
     <!-- ===== WIN SCREEN ===== -->
     <div id="win-screen">
         <h1>YOU WIN!</h1>
         <p style="font-size:1.5rem;margin-bottom:30px;">THE ULTIMATE BOSS HAS FALLEN</p>
         <button class="win-btn" onclick="location.reload()">CLOSE GAME</button>
     </div>
-
     <!-- ===== DEATH SCREEN ===== -->
     <div id="death-screen">
         <h1>YOU DIED!</h1>
         <p style="font-size:1.5rem;margin-bottom:30px;">RESPAWNING...</p>
         <button class="win-btn" onclick="respawnPlayer()">CONTINUE</button>
     </div>
-
     <!-- ===== 1v1 FINAL RESULT ===== -->
     <div id="onevone-result">
         <h1 id="ov-final-title" style="color:#ff6600;">MATCH OVER</h1>
@@ -167,7 +146,6 @@
         <div id="ov-final-score">5 — 3</div>
         <button class="win-btn" onclick="location.reload()">BACK TO MENU</button>
     </div>
-
     <!-- ===== MAIN MENU ===== -->
     <div id="main-menu" class="menu">
         <h1>POLYSTRIKE 3D</h1>
@@ -175,27 +153,22 @@
         <button class="menu-btn" onclick="validateAndStart('Singleplayer')">SINGLEPLAYER</button>
         <button class="menu-btn" onclick="showMultiplayerMenu()">MULTIPLAYER</button>
     </div>
-
     <!-- ===== MULTIPLAYER MENU ===== -->
     <div id="multiplayer-menu" class="menu hidden">
         <h1>MULTIPLAYER</h1>
         <button class="menu-btn" onclick="hostServer()">HOST SERVER</button>
         <input type="text" id="join-input" placeholder="ENTER 5-LETTER CODE..." maxlength="5">
         <button class="menu-btn" onclick="joinServer()">JOIN SERVER</button>
-
         <div class="duel-section">
             <div class="duel-label">⚔&nbsp;&nbsp;1v1 DUEL MODE — BEST OF 10 ROUNDS&nbsp;&nbsp;⚔</div>
             <button class="menu-btn-1v1" onclick="host1v1Server()">HOST 1v1 SERVER</button>
             <input type="text" id="join-1v1-input" placeholder="ENTER 1v1 CODE..." maxlength="5">
             <button class="menu-btn-1v1" onclick="join1v1Server()">JOIN 1v1 SERVER</button>
         </div>
-
         <button class="menu-btn" onclick="backToMain()" style="border-color:#f00;color:#f00;margin-top:8px;">BACK</button>
     </div>
-
     <!-- ===== HUD ===== -->
     <div id="hud" class="hidden">
-
         <!-- 1v1 top HUD (hidden in normal mode) -->
         <div id="onevone-hud" class="hidden">
             <div id="ov-round">ROUND 1 / 10</div>
@@ -213,51 +186,41 @@
                 </div>
             </div>
         </div>
-
         <!-- Round notification (pops up in center) -->
         <div id="round-notify" class="hidden">
             <h2 id="round-notify-title" style="color:#ff6600;">ROUND 1</h2>
             <p id="round-notify-sub">FIGHT!</p>
         </div>
-
         <!-- Crosshair -->
         <div id="crosshair"></div>
-
         <div id="settings-panel">
             <div class="setting-item">FOV: <input type="range" id="fov-slider" min="60" max="110" value="75" step="5"></div>
             <div class="setting-item"><button onclick="togglePerformance()">MAX FPS: <span id="fps-status">OFF</span></button></div>
         </div>
-
         <div id="top-stats">
             LVL: <span id="lvl">1</span> | HP: <span id="hp">100</span> | ENEMIES: <span id="enm">0</span><br>
             <span id="active-timer"></span>
         </div>
-
         <div id="ability-panel">
             <div id="ability-title">ABILITIES (1 MIN COOLDOWN)</div>
             <div id="ability-list"></div>
         </div>
-
         <div id="chat-container">
             <div id="chat-box"></div>
             <input type="text" id="chat-input" placeholder="Press Enter to Chat...">
         </div>
-
         <div id="weapon-info"><div id="cur-weapon-name">LASER GUN</div></div>
         <div id="inventory"></div>
     </div>
 </div>
-
 <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
 <script type="importmap">
     { "imports": { "three": "https://unpkg.com/three@0.160.0/build/three.module.js" } }
 </script>
-
 <script type="module">
 import * as THREE from 'three';
-
 // ================================================================
-//  CORE VARIABLES
+// CORE VARIABLES
 // ================================================================
 let scene, camera, renderer, clock, player;
 let move = { f: false, b: false, l: false, r: false };
@@ -265,12 +228,10 @@ let isFiring = false;
 let vel = new THREE.Vector3();
 let enemies = [], walls = [], bullets = [], enemyBullets = [];
 let curLvl = 1, playerHP = 100, curSlot = 0, lastFire = 0;
-
 let canJump = true;
 const GRAVITY = 30.0;
 const JUMP_FORCE = 12.0;
 let yVel = 0;
-
 let activeAbility = null;
 let abilityTimer = 0;
 let abilityCooldown = false;
@@ -278,22 +239,19 @@ let highPerf = false;
 let gameWon = false;
 let isDead = false;
 let myUsername = "Player";
-
 // Gun model groups — one per weapon slot
 let gunModels = [];
 let currentGunGroup = null;
-
 // ================================================================
-//  NETWORKING
+// NETWORKING
 // ================================================================
 let peer = null;
 let connections = [];
 let remotePlayers = {};
 let isHost = false;
 const MAX_PLAYERS = 5;
-
 // ================================================================
-//  1v1 STATE
+// 1v1 STATE
 // ================================================================
 let is1v1 = false;
 let oneVoneRound = 1;
@@ -305,47 +263,42 @@ let roundActive = false;
 let roundTransition = false;
 let oppUsername = "OPPONENT";
 let lastNetTick = 0;
-
 // ================================================================
-//  WEAPON DATA
+// WEAPON DATA
 // ================================================================
 const weapons = [
-    { name: "LASER GUN",   color: 0x00ffff, rate: 200,  dmg: 25,  bulletColor: 0x00ffff },
-    { name: "LASER RIFLE", color: 0x00ff00, rate: 150,  dmg: 20,  bulletColor: 0x00ff44 },
-    { name: "REVOLVER",    color: 0xaaaaaa, rate: 400,  dmg: 45,  bulletColor: 0xffd700 },
-    { name: "MINIGUN",     color: 0x444444, rate: 50,   dmg: 10,  bulletColor: 0xff8800 },
-    { name: "SMG",         color: 0x333333, rate: 80,   dmg: 12,  bulletColor: 0x88ddff },
-    { name: "SNIPER",      color: 0x00ff00, rate: 1000, dmg: 100, bulletColor: 0xffffff },
-    { name: "BAZOOKA",     color: 0x005500, rate: 1200, dmg: 150, bulletColor: 0xff4400 },
-    { name: "GRENADE",     color: 0x555500, rate: 800,  dmg: 80,  bulletColor: 0x44ff00 },
-    { name: "MEDKIT",      color: 0xff0000, rate: 1000, dmg: 0,   bulletColor: 0xff0000 },
-    { name: "SHIELD",      color: 0x0000ff, rate: 100,  dmg: 0,   bulletColor: 0x4488ff }
+    { name: "LASER GUN", color: 0x00ffff, rate: 200, dmg: 25, bulletColor: 0x00ffff },
+    { name: "LASER RIFLE", color: 0x00ff00, rate: 150, dmg: 20, bulletColor: 0x00ff44 },
+    { name: "REVOLVER", color: 0xaaaaaa, rate: 400, dmg: 45, bulletColor: 0xffd700 },
+    { name: "MINIGUN", color: 0x444444, rate: 50, dmg: 10, bulletColor: 0xff8800 },
+    { name: "SMG", color: 0x333333, rate: 80, dmg: 12, bulletColor: 0x88ddff },
+    { name: "SNIPER", color: 0x00ff00, rate: 1000, dmg: 100, bulletColor: 0xffffff },
+    { name: "BAZOOKA", color: 0x005500, rate: 1200, dmg: 150, bulletColor: 0xff4400 },
+    { name: "GRENADE", color: 0x555500, rate: 800, dmg: 80, bulletColor: 0x44ff00 },
+    { name: "MEDKIT", color: 0xff0000, rate: 1000, dmg: 0, bulletColor: 0xff0000 },
+    { name: "SHIELD", color: 0x0000ff, rate: 100, dmg: 0, bulletColor: 0x4488ff }
 ];
-
 const abilityPool = [
-    { id: "speed",   name: "2x Speed (1 min)",      duration: 60 },
-    { id: "god",     name: "Invincibility (1 min)",  duration: 60 },
-    { id: "oneshot", name: "ONE SHOT (10 SEC)",      duration: 10 },
-    { id: "freeze",  name: "Freeze Bullets (1 min)", duration: 60 }
+    { id: "speed", name: "2x Speed (1 min)", duration: 60 },
+    { id: "god", name: "Invincibility (1 min)", duration: 60 },
+    { id: "oneshot", name: "ONE SHOT (10 SEC)", duration: 10 },
+    { id: "freeze", name: "Freeze Bullets (1 min)", duration: 60 }
 ];
-
 // ================================================================
-//  GUN MODEL FACTORY — detailed 3D models for each weapon
+// GUN MODEL FACTORY — detailed 3D models for each weapon
 // ================================================================
 function mat(color, metalness=0.75, roughness=0.25, emissive=null, emissiveInt=0) {
     const cfg = { color, metalness, roughness };
     if (emissive !== null) { cfg.emissive = new THREE.Color(emissive); cfg.emissiveIntensity = emissiveInt; }
     return new THREE.MeshStandardMaterial(cfg);
 }
-
 function buildGunModels() {
-
     // ── 0: LASER GUN — futuristic compact sidearm ──────────────────
     {
         const g = new THREE.Group();
-        const bodyM  = mat(0x12123a, 0.9, 0.12);
-        const glowM  = mat(0x00ffff, 0.4, 0.2, 0x00ffff, 0.7);
-        const gripM  = mat(0x0a0a22, 0.3, 0.95);
+        const bodyM = mat(0x12123a, 0.9, 0.12);
+        const glowM = mat(0x00ffff, 0.4, 0.2, 0x00ffff, 0.7);
+        const gripM = mat(0x0a0a22, 0.3, 0.95);
         // Slide / body
         g.add(Object.assign(new THREE.Mesh(new THREE.BoxGeometry(0.07, 0.11, 0.28), bodyM)));
         // Barrel cylinder
@@ -370,13 +323,12 @@ function buildGunModels() {
         sgt.position.set(0, 0.067, -0.1); g.add(sgt);
         gunModels.push(g);
     }
-
     // ── 1: LASER RIFLE — long-barrel sci-fi marksman rifle ─────────
     {
         const g = new THREE.Group();
-        const bodyM   = mat(0x0c2a0c, 0.82, 0.22);
-        const glowM   = mat(0x00ff55, 0.4, 0.2, 0x00ff55, 0.55);
-        const metalM  = mat(0x1a4a1a, 1.0, 0.06);
+        const bodyM = mat(0x0c2a0c, 0.82, 0.22);
+        const glowM = mat(0x00ff55, 0.4, 0.2, 0x00ff55, 0.55);
+        const metalM = mat(0x1a4a1a, 1.0, 0.06);
         // Receiver
         g.add(new THREE.Mesh(new THREE.BoxGeometry(0.075, 0.098, 0.36), bodyM));
         // Long barrel
@@ -408,13 +360,12 @@ function buildGunModels() {
         fg.position.set(0, -0.095, -0.176); fg.rotation.x = -0.13; g.add(fg);
         gunModels.push(g);
     }
-
     // ── 2: REVOLVER — classic six-shooter with wood grip ───────────
     {
         const g = new THREE.Group();
         const silverM = mat(0x909090, 0.95, 0.08);
-        const darkM   = mat(0x3a3a3a, 0.85, 0.28);
-        const woodM   = mat(0x5a2d0a, 0.08, 0.92);
+        const darkM = mat(0x3a3a3a, 0.85, 0.28);
+        const woodM = mat(0x5a2d0a, 0.08, 0.92);
         // Frame
         g.add(new THREE.Mesh(new THREE.BoxGeometry(0.062, 0.1, 0.23), silverM));
         // Barrel (flat-topped)
@@ -453,14 +404,13 @@ function buildGunModels() {
         }
         gunModels.push(g);
     }
-
     // ── 3: MINIGUN — four-barrel gatling cannon ─────────────────────
     {
         const g = new THREE.Group();
-        const bodyM    = mat(0x282828, 0.92, 0.14);
-        const barrelM  = mat(0x505050, 1.0, 0.06);
-        const warnM    = mat(0xff4400, 0.6, 0.25, 0xff4400, 0.35);
-        const ammoM    = mat(0x4a4600, 0.55, 0.55);
+        const bodyM = mat(0x282828, 0.92, 0.14);
+        const barrelM = mat(0x505050, 1.0, 0.06);
+        const warnM = mat(0xff4400, 0.6, 0.25, 0xff4400, 0.35);
+        const ammoM = mat(0x4a4600, 0.55, 0.55);
         // Central housing
         const hous = new THREE.Mesh(new THREE.CylinderGeometry(0.1, 0.1, 0.17, 8), bodyM);
         hous.rotation.x = Math.PI/2; g.add(hous);
@@ -495,11 +445,10 @@ function buildGunModels() {
         ws.position.set(0, 0.1, 0.02); g.add(ws);
         gunModels.push(g);
     }
-
     // ── 4: SMG — compact with suppressor and folding stock ──────────
     {
         const g = new THREE.Group();
-        const bodyM  = mat(0x181818, 0.78, 0.32);
+        const bodyM = mat(0x181818, 0.78, 0.32);
         const metalM = mat(0x424242, 0.92, 0.14);
         const accentM = mat(0x0088ee, 0.5, 0.3, 0x0088ee, 0.3);
         // Receiver
@@ -536,14 +485,13 @@ function buildGunModels() {
         sgt.position.set(0, 0.058, -0.052); g.add(sgt);
         gunModels.push(g);
     }
-
     // ── 5: SNIPER — long bolt-action with big scope & bipod ─────────
     {
         const g = new THREE.Group();
-        const bodyM  = mat(0x191919, 0.72, 0.38);
+        const bodyM = mat(0x191919, 0.72, 0.38);
         const metalM = mat(0x545454, 0.96, 0.09);
-        const woodM  = mat(0x3c1e06, 0.08, 0.93);
-        const lensM  = mat(0x5555ff, 0.15, 0.08, 0x8888ff, 0.45);
+        const woodM = mat(0x3c1e06, 0.08, 0.93);
+        const lensM = mat(0x5555ff, 0.15, 0.08, 0x8888ff, 0.45);
         // Receiver
         g.add(new THREE.Mesh(new THREE.BoxGeometry(0.058, 0.082, 0.29), bodyM));
         // Long barrel
@@ -591,14 +539,13 @@ function buildGunModels() {
         }
         gunModels.push(g);
     }
-
     // ── 6: BAZOOKA — shoulder-fire rocket launcher ──────────────────
     {
         const g = new THREE.Group();
-        const tubeM  = mat(0x2c4e1a, 0.48, 0.72);
+        const tubeM = mat(0x2c4e1a, 0.48, 0.72);
         const metalM = mat(0x404040, 0.9, 0.18);
-        const warnM  = mat(0xff8800, 0.3, 0.8, 0xff8800, 0.2);
-        const rktM   = mat(0x888800, 0.82, 0.22);
+        const warnM = mat(0xff8800, 0.3, 0.8, 0xff8800, 0.2);
+        const rktM = mat(0x888800, 0.82, 0.22);
         // Main tube
         const tube = new THREE.Mesh(new THREE.CylinderGeometry(0.072, 0.072, 0.8, 10), tubeM);
         tube.rotation.x = Math.PI/2; g.add(tube);
@@ -634,12 +581,11 @@ function buildGunModels() {
         }
         gunModels.push(g);
     }
-
     // ── 7: GRENADE — ribbed pineapple with pin & lever ──────────────
     {
         const g = new THREE.Group();
-        const bodyM  = mat(0x4a5818, 0.38, 0.72);
-        const ribM   = mat(0x38440f, 0.35, 0.78);
+        const bodyM = mat(0x4a5818, 0.38, 0.72);
+        const ribM = mat(0x38440f, 0.35, 0.78);
         const metalM = mat(0x7a7a7a, 0.88, 0.22);
         const leverM = mat(0x9a9900, 0.65, 0.35);
         // Body sphere
@@ -668,14 +614,13 @@ function buildGunModels() {
         fuse.position.y = 0.154; g.add(fuse);
         gunModels.push(g);
     }
-
     // ── 8: MEDKIT — red box with white cross, glowing trim ──────────
     {
         const g = new THREE.Group();
-        const redM    = mat(0xbb0000, 0.28, 0.72);
-        const whiteM  = mat(0xffffff, 0.28, 0.82);
-        const clasp   = mat(0x888888, 0.82, 0.28);
-        const glowR   = mat(0xff0000, 0.1, 0.9, 0xff0000, 0.45);
+        const redM = mat(0xbb0000, 0.28, 0.72);
+        const whiteM = mat(0xffffff, 0.28, 0.82);
+        const clasp = mat(0x888888, 0.82, 0.28);
+        const glowR = mat(0xff0000, 0.1, 0.9, 0xff0000, 0.45);
         // Main box
         g.add(new THREE.Mesh(new THREE.BoxGeometry(0.18, 0.14, 0.22), redM));
         // White cross on front and back
@@ -704,13 +649,12 @@ function buildGunModels() {
         }
         gunModels.push(g);
     }
-
     // ── 9: SHIELD — hexagonal energy barrier with glowing core ──────
     {
         const g = new THREE.Group();
-        const frameM  = mat(0x001888, 0.9, 0.1);
+        const frameM = mat(0x001888, 0.9, 0.1);
         const energyM = mat(0x3377ff, 0.18, 0.28, 0x3377ff, 0.65);
-        const rimM    = mat(0x88aaff, 0.78, 0.14, 0x88aaff, 0.32);
+        const rimM = mat(0x88aaff, 0.78, 0.14, 0x88aaff, 0.32);
         // Hex frame (6-sided cylinder, thin)
         const frame = new THREE.Mesh(new THREE.CylinderGeometry(0.35, 0.35, 0.025, 6), frameM);
         frame.rotation.x = Math.PI/2; g.add(frame);
@@ -742,9 +686,8 @@ function buildGunModels() {
         gunModels.push(g);
     }
 }
-
 // ================================================================
-//  MENU NAVIGATION
+// MENU NAVIGATION
 // ================================================================
 window.showMultiplayerMenu = () => {
     document.getElementById('main-menu').classList.add('hidden');
@@ -754,9 +697,8 @@ window.backToMain = () => {
     document.getElementById('multiplayer-menu').classList.add('hidden');
     document.getElementById('main-menu').classList.remove('hidden');
 };
-
 // ================================================================
-//  STANDARD MULTIPLAYER (EXISTING)
+// STANDARD MULTIPLAYER (EXISTING)
 // ================================================================
 window.hostServer = () => {
     const user = document.getElementById('username-input').value.trim();
@@ -776,7 +718,6 @@ window.hostServer = () => {
         setupConnection(conn);
     });
 };
-
 window.joinServer = () => {
     const user = document.getElementById('username-input').value.trim();
     const code = document.getElementById('join-input').value.trim().toLowerCase();
@@ -790,7 +731,6 @@ window.joinServer = () => {
         validateAndStart(`JOINED: ${code.toUpperCase()}`);
     });
 };
-
 function setupConnection(conn) {
     conn.on('open', () => { connections.push(conn); conn.send({ type:'handshake', username: myUsername }); });
     conn.on('data', (data) => handlePeerData(data, conn));
@@ -800,7 +740,6 @@ function setupConnection(conn) {
         if (isHost) broadcast({ type:'playerDisconnect', id: conn.peer });
     });
 }
-
 function handlePeerData(data, conn) {
     if (data.type === 'error') { alert(data.msg); location.reload(); }
     if (data.type === 'handshake') {
@@ -826,13 +765,15 @@ function handlePeerData(data, conn) {
         chatMsg(data.user, data.msg, '#fff');
         if (isHost) broadcastExcept(conn, data);
     }
-    if (data.type === 'enemySync' && !isHost) updateEnemiesFromHost(data.enemies);
+    if (data.type === 'enemySync' && !isHost) updateEnemiesFromHost(data);
     if (data.type === 'enemyHit' && isHost) { const en = enemies.find(e => e.id === data.id); if (en) en.hp -= data.dmg; }
     if (data.type === 'playerDisconnect') {
         if (remotePlayers[data.id]) { scene.remove(remotePlayers[data.id].mesh); delete remotePlayers[data.id]; }
     }
+    if (data.type === 'gameWin') {
+        showWinScreen();
+    }
 }
-
 function createRemotePlayer(id, name) {
     if (remotePlayers[id]) return;
     const geo = new THREE.CylinderGeometry(0.5, 0.5, 2);
@@ -842,9 +783,8 @@ function createRemotePlayer(id, name) {
     remotePlayers[id] = { mesh, username: name };
     chatMsg("SERVER", `${name} connected.`, "#0af");
 }
-
 // ================================================================
-//  1v1 SERVER LOGIC
+// 1v1 SERVER LOGIC
 // ================================================================
 window.host1v1Server = () => {
     const user = document.getElementById('username-input').value.trim();
@@ -854,7 +794,7 @@ window.host1v1Server = () => {
     peer = new Peer(`polystrike1v1-${code}`);
     peer.on('open', () => {
         document.getElementById('network-status').innerText = `1v1 HOST: ${code.toUpperCase()}`;
-        alert(`SHARE THIS 1v1 CODE:\n\n  ${code.toUpperCase()}\n\nWaiting for opponent...`);
+        alert(`SHARE THIS 1v1 CODE:\n\n ${code.toUpperCase()}\n\nWaiting for opponent...`);
         validateAndStart('1v1 HOST');
     });
     peer.on('connection', (conn) => {
@@ -865,7 +805,6 @@ window.host1v1Server = () => {
         setup1v1Connection(conn);
     });
 };
-
 window.join1v1Server = () => {
     const user = document.getElementById('username-input').value.trim();
     const code = document.getElementById('join-1v1-input').value.trim().toLowerCase();
@@ -880,7 +819,6 @@ window.join1v1Server = () => {
     });
     peer.on('error', (e) => alert("Could not connect. Check the code!"));
 };
-
 function setup1v1Connection(conn) {
     conn.on('open', () => {
         connections.push(conn);
@@ -893,16 +831,14 @@ function setup1v1Connection(conn) {
         chatMsg("SERVER", "Opponent disconnected.", "#f44");
     });
 }
-
 function handle1v1Data(data, conn) {
     if (data.type === 'error') { alert(data.msg); location.reload(); }
-
     if (data.type === '1v1_handshake') {
         oppUsername = data.username;
         create1v1RemotePlayer(conn.peer, data.username);
         document.getElementById('ov-opp-label').innerText = data.username.substring(0, 7);
-        document.getElementById('ov-my-label').innerText  = myUsername.substring(0, 7);
-        document.getElementById('ov-matchup').innerText   = `${myUsername}  vs  ${data.username}`;
+        document.getElementById('ov-my-label').innerText = myUsername.substring(0, 7);
+        document.getElementById('ov-matchup').innerText = `${myUsername} vs ${data.username}`;
         chatMsg("SERVER", `${data.username} joined! Match starting...`, "#0af");
         if (isHost) {
             conn.send({ type:'1v1_handshake', username: myUsername });
@@ -913,19 +849,20 @@ function handle1v1Data(data, conn) {
             }, 2000);
         }
     }
-
     if (data.type === '1v1_start_round') {
-        oneVoneRound = data.round;
-        startRound();
+        if (data.round >= 99) {
+            showFinalResult();
+        } else {
+            oneVoneRound = data.round;
+            startRound();
+        }
     }
-
     if (data.type === 'move') {
         if (remotePlayers[conn.peer]) {
             remotePlayers[conn.peer].mesh.position.set(data.x, data.y, data.z);
             remotePlayers[conn.peer].mesh.rotation.y = data.ry;
         }
     }
-
     if (data.type === '1v1_hit') {
         if (activeAbility !== 'god' && roundActive) {
             playerHP -= data.dmg;
@@ -933,87 +870,53 @@ function handle1v1Data(data, conn) {
             update1v1HUD();
             if (playerHP <= 0) {
                 playerHP = 0; roundActive = false;
-                oppRoundWins++;
                 update1v1HUD();
                 showRoundResult(false);
-                // Host schedules next round
                 if (isHost) scheduleNextRound();
             }
         }
     }
-
     if (data.type === '1v1_opp_hp_sync') {
         oppHP = data.hp; update1v1HUD();
     }
-
-    if (data.type === '1v1_round_win') {
-        // Host told me opponent won a round (opponent killed me — already handled above via 1v1_hit)
-    }
-
     if (data.type === 'chat') { chatMsg(data.user, data.msg, '#fff'); }
 }
-
 function create1v1RemotePlayer(id, name) {
     if (remotePlayers[id]) return;
-    const grp = new THREE.Group();
-    // Torso
-    const torso = new THREE.Mesh(new THREE.BoxGeometry(0.8, 1.0, 0.5),
-        new THREE.MeshStandardMaterial({ color: 0x0055cc }));
-    torso.position.y = 0.5; grp.add(torso);
-    // Head
-    const head = new THREE.Mesh(new THREE.BoxGeometry(0.55, 0.55, 0.55),
-        new THREE.MeshStandardMaterial({ color: 0xffcc88 }));
-    head.position.y = 1.35; grp.add(head);
-    // Helmet
-    const helm = new THREE.Mesh(new THREE.BoxGeometry(0.6, 0.28, 0.6),
-        new THREE.MeshStandardMaterial({ color: 0x222266 }));
-    helm.position.y = 1.58; grp.add(helm);
-    // Legs
-    const legM = new THREE.MeshStandardMaterial({ color: 0x003399 });
-    const legGeo = new THREE.BoxGeometry(0.3, 1.0, 0.35);
-    for (const sx of [-0.22, 0.22]) {
-        const leg = new THREE.Mesh(legGeo, legM); leg.position.set(sx, -0.5, 0); grp.add(leg);
-    }
-    // Arms
-    const armGeo = new THREE.BoxGeometry(0.24, 0.88, 0.29);
-    const armM   = new THREE.MeshStandardMaterial({ color: 0x0055cc });
-    for (const sx of [-0.54, 0.54]) {
-        const arm = new THREE.Mesh(armGeo, armM); arm.position.set(sx, 0.55, 0); grp.add(arm);
-    }
-    scene.add(grp);
-    remotePlayers[id] = { mesh: grp, username: name };
+    const geo = new THREE.CylinderGeometry(0.5, 0.5, 2);
+    const mat_ = new THREE.MeshStandardMaterial({ color: 0x0088ff });
+    const mesh = new THREE.Mesh(geo, mat_);
+    mesh.castShadow = true;
+    mesh.receiveShadow = true;
+    scene.add(mesh);
+    remotePlayers[id] = { mesh, username: name };
 }
-
 // ── Round management ──
 function startRound() {
     playerHP = 100; oppHP = 100;
     roundActive = false; roundTransition = true; isDead = false;
     document.getElementById('death-screen').style.display = 'none';
     document.getElementById('hp').innerText = 100;
-
     // Spawn on opposite sides of the arena
     player.position.set(isHost ? -22 : 22, 1.6, 0);
     const remIds = Object.keys(remotePlayers);
     if (remIds.length > 0) {
         remotePlayers[remIds[0]].mesh.position.set(isHost ? 22 : -22, 1.6, 0);
     }
-
     updateRoundHUD(); update1v1HUD();
     showRoundNotify(`ROUND ${oneVoneRound} / ${MAX_ROUNDS}`, "FIGHT!", "#ff6600");
-
     setTimeout(() => {
         roundActive = true; roundTransition = false;
         document.getElementById('round-notify').classList.add('hidden');
     }, 2600);
 }
-
 function scheduleNextRound() {
     const finished = (oneVoneRound >= MAX_ROUNDS);
     if (finished) {
         setTimeout(() => {
             showFinalResult();
             // Tell opponent to show final too
-            broadcast({ type:'1v1_start_round', round: MAX_ROUNDS + 99 });
+            broadcast({ type:'1v1_start_round', round: 99 });
         }, 3200);
     } else {
         oneVoneRound++;
@@ -1023,7 +926,6 @@ function scheduleNextRound() {
         }, 3600);
     }
 }
-
 function showRoundResult(iWon) {
     if (iWon) myRoundWins++; else oppRoundWins++;
     update1v1HUD(); updateRoundHUD();
@@ -1032,7 +934,6 @@ function showRoundResult(iWon) {
     showRoundNotify(title, `Score: ${myRoundWins} — ${oppRoundWins}`, color);
     chatMsg("ROUND", `${title} Score: ${myRoundWins} - ${oppRoundWins}`, color);
 }
-
 function showRoundNotify(title, sub, color) {
     const el = document.getElementById('round-notify');
     document.getElementById('round-notify-title').innerText = title;
@@ -1044,7 +945,6 @@ function showRoundNotify(title, sub, color) {
     el.offsetHeight; // reflow
     el.style.animation = '';
 }
-
 function showFinalResult() {
     gameWon = true; isFiring = false; roundActive = false;
     document.exitPointerLock();
@@ -1056,48 +956,41 @@ function showFinalResult() {
     document.getElementById('ov-final-score').innerText = `${myRoundWins} — ${oppRoundWins}`;
     document.getElementById('ov-matchup').innerText = `${myUsername} vs ${oppUsername}`;
 }
-
 function updateRoundHUD() {
     document.getElementById('ov-round').innerText = `ROUND ${Math.min(oneVoneRound, MAX_ROUNDS)} / ${MAX_ROUNDS}`;
     document.getElementById('ov-scores').innerText = `${myRoundWins} : ${oppRoundWins}`;
 }
-
 function update1v1HUD() {
     const mP = Math.max(0, playerHP) / 100;
-    const oP = Math.max(0, oppHP)    / 100;
-    document.getElementById('ov-my-fill').style.width  = (mP * 100) + '%';
+    const oP = Math.max(0, oppHP) / 100;
+    document.getElementById('ov-my-fill').style.width = (mP * 100) + '%';
     document.getElementById('ov-opp-fill').style.width = (oP * 100) + '%';
-    document.getElementById('ov-my-hp-num').innerText  = Math.ceil(Math.max(0, playerHP));
+    document.getElementById('ov-my-hp-num').innerText = Math.ceil(Math.max(0, playerHP));
     document.getElementById('ov-opp-hp-num').innerText = Math.ceil(Math.max(0, oppHP));
 }
-
 // ================================================================
-//  GAME INIT
+// GAME INIT
 // ================================================================
 window.validateAndStart = (mode) => {
     document.getElementById('main-menu').classList.add('hidden');
     document.getElementById('multiplayer-menu').classList.add('hidden');
     document.getElementById('hud').classList.remove('hidden');
-
     if (is1v1) {
         document.getElementById('onevone-hud').classList.remove('hidden');
         document.getElementById('top-stats').style.visibility = 'hidden';
         document.getElementById('ability-panel').style.visibility = 'hidden';
         chatMsg("SERVER", `1v1 Duel mode — best of ${MAX_ROUNDS} rounds. Waiting for opponent...`, "#ff6600");
     }
-
     init();
     if (!is1v1 && (isHost || !peer)) spawnLevel(curLvl);
     if (!is1v1) refreshAbilities();
     chatMsg("SYSTEM", `Starting as ${myUsername} [${mode}]`, "#ffff00");
 };
-
 function handleDeath() {
     isDead = true; isFiring = false;
     document.exitPointerLock();
     document.getElementById('death-screen').style.display = 'flex';
 }
-
 window.respawnPlayer = () => {
     playerHP = 100; isDead = false;
     player.position.set(0, 1.6, 0);
@@ -1105,34 +998,29 @@ window.respawnPlayer = () => {
     document.getElementById('hp').innerText = 100;
     document.body.requestPointerLock();
 };
-
 window.togglePerformance = () => {
     highPerf = !highPerf;
     document.getElementById('fps-status').innerText = highPerf ? "ON" : "OFF";
     renderer.setPixelRatio(highPerf ? 0.5 : window.devicePixelRatio);
 };
-
 // ================================================================
-//  THREE.JS INIT
+// THREE.JS INIT
 // ================================================================
 function init() {
-    scene  = new THREE.Scene();
+    scene = new THREE.Scene();
     scene.background = new THREE.Color(0x020202);
     scene.fog = new THREE.Fog(0x020202, 40, 100);
-    clock  = new THREE.Clock();
-
+    clock = new THREE.Clock();
     camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
     player = new THREE.Group();
     player.position.set(0, 1.6, 0);
     scene.add(player);
     player.add(camera);
-
     renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.shadowMap.enabled = true;
     document.body.appendChild(renderer.domElement);
-
     // Lighting
     scene.add(new THREE.AmbientLight(0xffffff, 0.45));
     const sun = new THREE.DirectionalLight(0xffffff, 0.7);
@@ -1142,25 +1030,21 @@ function init() {
     const fill = new THREE.PointLight(0x4466ff, 0.5, 80);
     fill.position.set(-20, 10, -20);
     scene.add(fill);
-
     createWorld();
     buildGunModels();
     createInventoryUI();
     setupControls();
     animate();
-
     document.getElementById('fov-slider').addEventListener('input', (e) => {
         camera.fov = parseInt(e.target.value);
         camera.updateProjectionMatrix();
     });
-
     window.addEventListener('resize', () => {
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
         renderer.setSize(window.innerWidth, window.innerHeight);
     });
 }
-
 function createWorld() {
     // Floor with grid-like tiles
     const floorMat = new THREE.MeshStandardMaterial({ color: 0x0d0d0d, roughness: 0.9, metalness: 0.1 });
@@ -1168,11 +1052,9 @@ function createWorld() {
     floor.rotation.x = -Math.PI/2;
     floor.receiveShadow = true;
     scene.add(floor);
-
     // Grid lines on floor
     const gridHelper = new THREE.GridHelper(100, 20, 0x0a3a0a, 0x0a3a0a);
     scene.add(gridHelper);
-
     const wallM = new THREE.MeshStandardMaterial({ color: 0x181818, roughness: 0.7, metalness: 0.3 });
     const makeWall = (w, h, d, x, z) => {
         const m = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), wallM);
@@ -1181,11 +1063,10 @@ function createWorld() {
         scene.add(m);
         walls.push(new THREE.Box3().setFromObject(m));
     };
-    makeWall(100, 10, 2, 0,  50);
+    makeWall(100, 10, 2, 0, 50);
     makeWall(100, 10, 2, 0, -50);
-    makeWall(2,  10, 100, 50,  0);
-    makeWall(2,  10, 100, -50, 0);
-
+    makeWall(2, 10, 100, 50, 0);
+    makeWall(2, 10, 100, -50, 0);
     // Some cover crates/pillars
     const crateM = new THREE.MeshStandardMaterial({ color: 0x2a2a00, roughness: 0.8, metalness: 0.2 });
     const pillarM = new THREE.MeshStandardMaterial({ color: 0x222222, roughness: 0.6, metalness: 0.5 });
@@ -1203,7 +1084,6 @@ function createWorld() {
     for (const [x, z] of [[6,0],[-6,0],[0,6],[0,-6],[18,18],[-18,18],[18,-18],[-18,-18]]) {
         makeCover(3, 2.5, 3, x, z, crateM);
     }
-
     // Dividing wall for 1v1
     if (is1v1) {
         // Add a subtle center line marker
@@ -1216,9 +1096,8 @@ function createWorld() {
         }
     }
 }
-
 // ================================================================
-//  INVENTORY & WEAPON DISPLAY
+// INVENTORY & WEAPON DISPLAY
 // ================================================================
 function createInventoryUI() {
     const inv = document.getElementById('inventory');
@@ -1231,18 +1110,14 @@ function createInventoryUI() {
     });
     selectSlot(0);
 }
-
 function selectSlot(i) {
     curSlot = i;
     document.querySelectorAll('.slot').forEach((s, idx) => s.classList.toggle('active', idx === i));
     document.getElementById('cur-weapon-name').innerText = weapons[i].name;
-
     // Remove previous gun group from camera
     if (currentGunGroup) camera.remove(currentGunGroup);
-
     // Clone the gun model for this slot and add to camera
     currentGunGroup = gunModels[i].clone();
-
     // Position gun in view — shield goes centered/left, others go right
     if (weapons[i].name === "SHIELD") {
         currentGunGroup.position.set(-0.25, -0.3, -0.55);
@@ -1259,12 +1134,10 @@ function selectSlot(i) {
     } else {
         currentGunGroup.position.set(0.28, -0.3, -0.55);
     }
-
     camera.add(currentGunGroup);
 }
-
 // ================================================================
-//  ABILITIES
+// ABILITIES
 // ================================================================
 function refreshAbilities() {
     if (abilityCooldown) return;
@@ -1279,7 +1152,6 @@ function refreshAbilities() {
         list.appendChild(btn);
     });
 }
-
 function activateAbility(ab) {
     activeAbility = ab.id;
     abilityTimer = ab.duration;
@@ -1291,9 +1163,8 @@ function activateAbility(ab) {
         setTimeout(() => { abilityCooldown = false; refreshAbilities(); }, 60000);
     }, ab.duration * 1000);
 }
-
 // ================================================================
-//  INPUT
+// INPUT
 // ================================================================
 function setupControls() {
     document.addEventListener('keydown', e => {
@@ -1326,7 +1197,6 @@ function setupControls() {
         }
     });
 }
-
 function handleChat() {
     const input = document.getElementById('chat-input');
     if (document.activeElement !== input) { input.focus(); }
@@ -1338,15 +1208,13 @@ function handleChat() {
         input.value = ""; input.blur(); document.body.requestPointerLock();
     }
 }
-
 function chatMsg(user, msg, color = '#fff') {
     const box = document.getElementById('chat-box');
     box.innerHTML += `<div style="color:${color}"><b>${user}:</b> ${msg}</div>`;
     box.scrollTop = box.scrollHeight;
 }
-
 // ================================================================
-//  BULLETS
+// BULLETS
 // ================================================================
 function spawnBullet(pos, dir, dmg, isLocal, color=0xffff00) {
     const size = dmg > 80 ? 0.18 : 0.08;
@@ -1360,22 +1228,20 @@ function spawnBullet(pos, dir, dmg, isLocal, color=0xffff00) {
     scene.add(bMesh);
     if (isLocal) broadcast({ type:'shoot', pos: {x:pos.x,y:pos.y,z:pos.z}, dir: {x:dir.x,y:dir.y,z:dir.z}, dmg });
 }
-
 function spawnEnemyBullet(pos, dir) {
     const ebMesh = new THREE.Mesh(new THREE.SphereGeometry(0.18, 6, 6), new THREE.MeshBasicMaterial({ color: 0xff3300 }));
     ebMesh.position.copy(pos);
     enemyBullets.push({ mesh: ebMesh, dir: new THREE.Vector3(dir.x, dir.y, dir.z), time: Date.now() });
     scene.add(ebMesh);
 }
-
 // ================================================================
-//  ENEMY LOGIC
+// ENEMY LOGIC
 // ================================================================
 function spawnLevel(n) {
     enemies.forEach(e => { scene.remove(e.mesh); scene.remove(e.hpBar); });
     enemies = [];
     const isBoss = (n === 10);
-    const count  = isBoss ? 1 : n * 2;
+    const count = isBoss ? 1 : n * 2;
     document.getElementById('enm').innerText = count;
     document.getElementById('lvl').innerText = n;
     for (let i = 0; i < count; i++) {
@@ -1393,8 +1259,8 @@ function spawnLevel(n) {
         enemies.push({ id: Math.random().toString(36).substr(2,9), mesh: m, hpBar, hp: isBoss?1000:100, maxHP: isBoss?1000:100, lastShot: 0, scale, isBoss });
     }
 }
-
-function updateEnemiesFromHost(enemyData) {
+function updateEnemiesFromHost(syncData) {
+    const enemyData = syncData.enemies;
     const activeIds = enemyData.map(e => e.id);
     enemies = enemies.filter(en => {
         if (!activeIds.includes(en.id)) { scene.remove(en.mesh); scene.remove(en.hpBar); return false; }
@@ -1416,11 +1282,14 @@ function updateEnemiesFromHost(enemyData) {
         en.hpBar.scale.x = Math.max(0.01, en.hp/en.maxHP);
         en.hpBar.lookAt(camera.position);
     });
+    if (syncData.lvl !== undefined) {
+        curLvl = syncData.lvl;
+        document.getElementById('lvl').innerText = curLvl;
+    }
     document.getElementById('enm').innerText = enemies.length;
 }
-
 // ================================================================
-//  WIN SCREEN
+// WIN SCREEN
 // ================================================================
 function showWinScreen() {
     gameWon = true; isFiring = false;
@@ -1428,29 +1297,24 @@ function showWinScreen() {
     document.getElementById('win-screen').style.display = 'flex';
     document.getElementById('hud').classList.add('hidden');
 }
-
 // ================================================================
-//  BROADCAST HELPERS
+// BROADCAST HELPERS
 // ================================================================
 function broadcast(data) { connections.forEach(c => c.send(data)); }
 function broadcastExcept(ex, data) { connections.forEach(c => { if (c !== ex) c.send(data); }); }
-
 // ================================================================
-//  MAIN LOOP
+// MAIN LOOP
 // ================================================================
 function animate() {
     requestAnimationFrame(animate);
     if (gameWon) return;
-
     const dt = clock.getDelta();
-
     // Ability timer display
     if (activeAbility) {
         abilityTimer -= dt;
         document.getElementById('active-timer').innerText =
             `ACTIVE: ${activeAbility.toUpperCase()} (${Math.max(0, Math.ceil(abilityTimer))}s)`;
     }
-
     // Skip movement if dead or in round transition
     if (!isDead && !(is1v1 && roundTransition)) {
         const oldPos = player.position.clone();
@@ -1461,41 +1325,38 @@ function animate() {
         if (move.f || move.b || move.l || move.r)
             vel.add(d.applyQuaternion(player.quaternion).multiplyScalar(speedMult * dt));
         player.position.addScaledVector(vel, dt);
-
         yVel -= GRAVITY * dt;
         player.position.y += yVel * dt;
         if (player.position.y < 1.6) { player.position.y = 1.6; yVel = 0; canJump = true; }
-
-        const pBox = new THREE.Box3().setFromCenterAndSize(player.position, new THREE.Vector3(1,2,1));
-        for (const w of walls) if (pBox.intersectsBox(w)) { player.position.x = oldPos.x; player.position.z = oldPos.z; }
+        // IMPROVED COLLISION: smaller player box to prevent falling inside props / roofs
+        const pBox = new THREE.Box3().setFromCenterAndSize(player.position, new THREE.Vector3(0.8, 2.0, 0.8));
+        for (const w of walls) if (pBox.intersectsBox(w)) {
+            player.position.x = oldPos.x;
+            player.position.z = oldPos.z;
+        }
     }
-
     // Gun bob
     if (currentGunGroup && !is1v1) {
         const t = clock.getElapsedTime();
         currentGunGroup.rotation.z = Math.sin(t * (move.f||move.b ? 8 : 3)) * 0.015;
         currentGunGroup.position.y = (weapons[curSlot].name === "SHIELD" ? -0.3 : -0.3) + Math.sin(t * (move.f||move.b ? 8 : 3)) * 0.006;
     }
-
     // Network sync
     if (Date.now() - lastNetTick > 50 && peer) {
         broadcast({ type:'move', x:player.position.x, y:player.position.y, z:player.position.z, ry:player.rotation.y });
-
         if (is1v1 && roundActive) {
             // Sync our HP to opponent
             broadcast({ type:'1v1_opp_hp_sync', hp: playerHP });
         }
-
-        if (!is1v1 && isHost && enemies.length) {
+        if (!is1v1 && isHost && enemies.length >= 0) {
             const enemyData = enemies.map(en => ({
                 id: en.id, x: en.mesh.position.x, y: en.mesh.position.y, z: en.mesh.position.z,
                 hp: en.hp, maxHP: en.maxHP, isBoss: en.isBoss
             }));
-            broadcast({ type:'enemySync', enemies: enemyData });
+            broadcast({ type:'enemySync', enemies: enemyData, lvl: curLvl });
         }
         lastNetTick = Date.now();
     }
-
     // Firing
     const curWep = weapons[curSlot];
     if (isFiring && !isDead && !(is1v1 && (!roundActive || roundTransition)) && Date.now() - lastFire > curWep.rate) {
@@ -1509,34 +1370,32 @@ function animate() {
             spawnBullet(player.position.clone(), dir, realDmg, true, curWep.bulletColor);
         }
     }
-
     // Shield regeneration
     if (curWep.name === "SHIELD" && !isDead) {
         playerHP = Math.min(100, playerHP + 5 * dt);
     }
-
     // HP display
     document.getElementById('hp').innerText = Math.max(0, Math.floor(playerHP));
-
     // ── Bullet update ──
     for (let i = bullets.length - 1; i >= 0; i--) {
         const b = bullets[i];
         b.mesh.position.addScaledVector(b.dir, 70 * dt);
-
         // Hit enemies (non-1v1)
         if (!is1v1) {
             for (let j = enemies.length - 1; j >= 0; j--) {
                 const en = enemies[j];
                 if (b.mesh.position.distanceTo(en.mesh.position) < (1.2 * en.scale)) {
                     if (b.isLocal) {
-                        if (isHost) en.hp -= b.dmg;
-                        else broadcast({ type:'enemyHit', id: en.id, dmg: b.dmg });
+                        if (isHost || !peer) {
+                            en.hp -= b.dmg;
+                        } else {
+                            broadcast({ type:'enemyHit', id: en.id, dmg: b.dmg });
+                        }
                     }
                     scene.remove(b.mesh); bullets.splice(i, 1); break;
                 }
             }
         }
-
         // Hit remote players (1v1 mode)
         if (is1v1 && b.isLocal && roundActive) {
             for (const [id, rp] of Object.entries(remotePlayers)) {
@@ -1557,10 +1416,8 @@ function animate() {
                 }
             }
         }
-
         if (bullets[i] && b.time < Date.now() - 2000) { scene.remove(b.mesh); bullets.splice(i, 1); }
     }
-
     // ── Enemy bullets update ──
     const bulletFreeze = activeAbility === "freeze" ? 0.1 : 1;
     for (let i = enemyBullets.length - 1; i >= 0; i--) {
@@ -1577,53 +1434,46 @@ function animate() {
         }
         if (Date.now() - eb.time > 3000) { scene.remove(eb.mesh); enemyBullets.splice(i, 1); }
     }
-
     // ── Host AI / enemy logic (non-1v1 only) ──
     if (!is1v1 && (isHost || !peer)) {
         for (let idx = enemies.length - 1; idx >= 0; idx--) {
             const en = enemies[idx];
-
             // Find closest target
             let targetPos = player.position;
-            let minDist   = en.mesh.position.distanceTo(player.position);
+            let minDist = en.mesh.position.distanceTo(player.position);
             Object.values(remotePlayers).forEach(p => {
                 const d2 = en.mesh.position.distanceTo(p.mesh.position);
                 if (d2 < minDist) { minDist = d2; targetPos = p.mesh.position; }
             });
-
             const moveDir = new THREE.Vector3().subVectors(targetPos, en.mesh.position).normalize();
             en.mesh.position.addScaledVector(moveDir, 4 * dt);
-
             en.hpBar.position.set(en.mesh.position.x, 2.5*en.scale+0.5, en.mesh.position.z);
             en.hpBar.scale.x = Math.max(0.01, en.hp/en.maxHP);
             en.hpBar.lookAt(camera.position);
-
             if (minDist < 20 && Date.now() - en.lastShot > 2500) {
                 spawnEnemyBullet(en.mesh.position, moveDir);
                 if (isHost) broadcast({ type:'enemyShoot', pos: en.mesh.position, dir: moveDir });
                 en.lastShot = Date.now();
             }
-
             if (en.hp <= 0) {
                 const wasBoss = en.isBoss;
                 scene.remove(en.mesh); scene.remove(en.hpBar);
                 enemies.splice(idx, 1);
                 document.getElementById('enm').innerText = enemies.length;
-                if (wasBoss) showWinScreen();
+                if (wasBoss) {
+                    showWinScreen();
+                    broadcast({ type: 'gameWin' });
+                }
                 else if (enemies.length === 0 && curLvl < 10) spawnLevel(++curLvl);
             }
         }
     }
-
     // ── 1v1: check for round end if local player died ──
     if (is1v1 && roundActive && playerHP <= 0) {
         playerHP = 0; roundActive = false;
-        // Handle locally — the damage came from 1v1_hit which already triggered this
     }
-
     renderer.render(scene, camera);
 }
-
 </script>
 </body>
 </html>
